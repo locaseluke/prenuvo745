@@ -66,40 +66,34 @@ window.addEventListener("DOMContentLoaded", (event) => {
 
 // Triggered in finally above
 function writeJobs() {
-    departmentIds.forEach((departmentId) => {
-      const handleError = (response) => {
-        if (!response.ok) {
-          throw Error(`${response.status} ${response.statusText}`);
-        } else {
-          return response.json();
-        }
-      };
-  
-      fetch(
-        "https://boards-api.greenhouse.io/v1/boards/" +
-          ghSlug +
-          "/departments/" +
-          departmentId
-      )
-        .then(handleError)
-        .then((data) => {
-          let parent = document.getElementById(data.id);
-          let parentContainer = parent.getElementsByClassName("container")[0];
-          let careersAccordionTriggers = parent.getElementsByClassName("careers_accordion-trigger");
-          let sectionHeading = document.getElementById("dname");
-          let sectionTitle = sectionHeading.cloneNode(true);
-          sectionTitle.innerText = data.name;
-  
-          // Assuming each department has its own .careers_accordion-trigger within the same parent
-          if (careersAccordionTriggers.length > 0) {
-            let careersAccordionTrigger = careersAccordionTriggers[0]; // Assuming you're targeting the first one found
-            careersAccordionTrigger.insertBefore(sectionTitle, careersAccordionTrigger.firstChild);
-          }
-  
-          data.jobs.forEach((job) => {
-            let listing = document.getElementById("listing");
-            let ghListing = listing.cloneNode(true);
-            ghListing.id = job.id;
+  departmentIds.forEach((departmentId) => {
+    const handleError = (response) => {
+      if (!response.ok) {
+        throw Error(`${response.status} ${response.statusText}`);
+      } else {
+        return response.json();
+      }
+    };
+
+    fetch(
+      "https://boards-api.greenhouse.io/v1/boards/" +
+        ghSlug +
+        "/departments/" +
+        departmentId
+    )
+      .then(handleError)
+      .then((data) => {
+        let parent = document.getElementById(data.id);
+        let parentContainer = parent.getElementsByClassName("container")[0];
+        let sectionHeading = document.getElementById("dname");
+        let sectionTitle = sectionHeading.cloneNode(true);
+        sectionTitle.innerText = data.name;
+        parentContainer.appendChild(sectionTitle);
+
+        data.jobs.forEach((job) => {
+          let listing = document.getElementById("listing");
+          let ghListing = listing.cloneNode(true);
+          ghListing.id = job.id;
 
           let jobTitle = ghListing.getElementsByClassName("job-title")[0];
           jobTitle.innerText = job.title;
