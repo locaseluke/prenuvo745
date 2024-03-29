@@ -12,12 +12,12 @@ const errorText = document.getElementById("errtext");
 jobFilter.onchange = function () {
   let selectedSection = this.value;
   if (selectedSection == "all") {
-    let filtered = document.querySelectorAll(".department-section");
+    let filtered = document.querySelectorAll(".careers_accordion");
     filtered.forEach((filtered) => {
       filtered.style.display = "block";
     });
   } else {
-    let filtered = document.querySelectorAll(".department-section");
+    let filtered = document.querySelectorAll(".careers_accordion");
     filtered.forEach((filtered) => {
       filtered.style.display = "none";
     });
