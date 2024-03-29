@@ -138,11 +138,15 @@ function writeJobs() {
       .catch(function writeError(err) {
         console.error(err);
       })
-     .finally(() => {
+      .finally(() => {
         loading.classList.add("invisible");
         loading.remove();
         root.classList.add("visible");
-        root.style.height = "92rem";
-      });
+        root.style.height = "60rem";
+        var firstAccordionTrigger = document.querySelector('.careers_accordion-trigger');
+        if (firstAccordionTrigger) {
+          firstAccordionTrigger.click();
+        }
+      });      
   });
 }
