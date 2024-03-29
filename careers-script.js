@@ -10,21 +10,38 @@ const errorText = document.getElementById("errtext");
 
 // Filtering function for select element
 jobFilter.onchange = function () {
-  let selectedSection = this.value;
-  if (selectedSection == "all") {
-    let filtered = document.querySelectorAll(".careers_accordion");
-    filtered.forEach((filtered) => {
-      filtered.style.display = "block";
+    let selectedSection = this.value;
+    // Hide all sections initially
+    let accordions = document.querySelectorAll(".careers_accordion");
+    accordions.forEach((accordion) => {
+      accordion.style.display = "none";
+      // Remove 'open' class from all accordion contents and icon wrappers within each section
+      let contents = accordion.querySelectorAll(".careers_accordion-content");
+      let icons = accordion.querySelectorAll(".careers_icon-wrapper");
+      contents.forEach(content => content.classList.remove('open'));
+      icons.forEach(icon => icon.classList.remove('open'));
     });
-  } else {
-    let filtered = document.querySelectorAll(".careers_accordion");
-    filtered.forEach((filtered) => {
-      filtered.style.display = "none";
-    });
-    document.getElementById(selectedSection).style.display = "block";
-  }
-};
-
+  
+    if (selectedSection == "all") {
+      // Show and open all sections if "all" is selected
+      accordions.forEach((accordion) => {
+        accordion.style.display = "block";
+        let contents = accordion.querySelectorAll(".careers_accordion-content");
+        let icons = accordion.querySelectorAll(".careers_icon-wrapper");
+        contents.forEach(content => content.classList.add('open'));
+        icons.forEach(icon => icon.classList.add('open'));
+      });
+    } else {
+      // Show and open only the selected section
+      let selectedAccordion = document.getElementById(selectedSection);
+      selectedAccordion.style.display = "block";
+      let contents = selectedAccordion.querySelectorAll(".careers_accordion-content");
+      let icons = selectedAccordion.querySelectorAll(".careers_icon-wrapper");
+      contents.forEach(content => content.classList.add('open'));
+      icons.forEach(icon => icon.classList.add('open'));
+    }
+  };
+  
 // Triggers when the DOM is ready
 window.addEventListener("DOMContentLoaded", (event) => {
   const handleError = (response) => {
