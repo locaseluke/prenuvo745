@@ -142,7 +142,7 @@ function writeJobs() {
         loading.classList.add("invisible");
         loading.remove();
         root.classList.add("visible");
-        root.style.height = "132rem";
+        root.style.height = "92rem";
       });
   });
 }
